@@ -38,11 +38,11 @@ button {
   background: cornsilk;
   transition: 0.3s ease;
 
-  :hover {
+  &:hover {
     background: #fcddc4;
   }
 
-  :active {
+  &:active {
     transform: scale(0.9);
     background: #fcddc4;
   }

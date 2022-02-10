@@ -1,4 +1,17 @@
-export default function Card(props) {
+type cardobj = {
+  src: string;
+  matched: boolean;
+  id: number;
+};
+
+interface Props {
+  disabled: boolean | null;
+  handleChoice: any;
+  card: cardobj;
+  hidden: boolean;
+}
+
+export default function Card(props: Props) {
   const handleClick = () => {
     if (!props.disabled) {
       props.handleChoice(props.card);

@@ -1,22 +1,33 @@
-import { ObjectEncodingOptions } from "fs";
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import "./styles.scss";
 
+type obj = object & {
+  src: string;
+  matched: boolean;
+}
+
+type cardobj = {
+  src: string;
+  matched: boolean;
+  id: number;
+}
+
+
 export default function App() {
-  const [cards, setCards] = useState([]);
-  const [turns, setTurns] = useState(0);
-  const [choiceOne, setChoiceOne] = useState(null);
-  const [choiceTwo, setChoiceTwo] = useState(null);
-  const [disabled, setDisabled] = useState(false);
+  const [cards, setCards] = useState<cardobj[] | null>([]);
+  const [turns, setTurns] = useState<number | null>(0);
+  const [choiceOne, setChoiceOne] = useState<obj | null>(null);
+  const [choiceTwo, setChoiceTwo] = useState<obj | null>(null);
+  const [disabled, setDisabled] = useState<boolean | null>(false);
 
   const shuffle = (series: string) => {
     const url: string =
       "https://www.amiiboapi.com/api/amiibo/?gameseries=" + series;
-    const data: object = httpGet(url);
-    const items: object[] = generateItems(data);
+    const data: obj = httpGet(url);
+    const items: obj[] = generateItems(data);
 
-    const shuffled: object[] = [...items, ...items]
+    const shuffled: cardobj[] = [...items, ...items]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
 
@@ -26,7 +37,7 @@ export default function App() {
     setTurns(0);
   };
 
-  const handleChoice = (card: object) => {
+  const handleChoice = (card: obj) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -35,7 +46,7 @@ export default function App() {
       setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
         setCards((prevCards) => {
-          return prevCards.map((card) => {
+          return prevCards!.map((card) => {
             if (card.src === choiceOne.src) {
               return { ...card, matched: true };
             } else {
@@ -51,7 +62,7 @@ export default function App() {
   const reset = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
-    setTurns((prevTurns) => prevTurns + 1);
+    setTurns((prevTurns) => prevTurns! + 1);
     setDisabled(false);
   };
 
@@ -86,7 +97,7 @@ export default function App() {
       </button>
 
       <div className="grid">
-        {cards.map((card) => (
+        {cards!.map((card) => (
           <Card
             key={card.id}
             card={card}
@@ -102,15 +113,15 @@ export default function App() {
 }
 
 // Helpers
-function httpGet(theUrl: string): object {
+function httpGet(theUrl: string): obj {
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.open("GET", theUrl, false);
   xmlHttp.send(null);
   return JSON.parse(xmlHttp.responseText);
 }
 
-function generateItems(data: object): object[] {
-  const items: object[] = [
+function generateItems(data: any): obj[] {
+  const items: obj[] = [
     {
       src:
         data.amiibo[Math.floor(Math.random() * Object.keys(data.amiibo).length)]
