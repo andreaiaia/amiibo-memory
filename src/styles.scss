@@ -1,0 +1,49 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.grid {
+  margin-top: 3em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+  justify-items: center;
+}
+img {
+  width: 150px;
+  height: auto;
+  transition: 0.2s ease;
+}
+.hidden {
+  opacity: 0;
+}
+.cardContainer {
+  width: 180px;
+  height: 270px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #ddd;
+  display: grid;
+  justify-items: center;
+  place-items: center;
+}
+.cardHidden {
+  background-color: #fff;
+}
+button {
+  padding: 5px 10px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: cornsilk;
+  transition: 0.3s ease;
+
+  :hover {
+    background: #fcddc4;
+  }
+
+  :active {
+    transform: scale(0.9);
+    background: #fcddc4;
+  }
+}
