@@ -2,17 +2,13 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import "./styles.scss";
 
-type obj = object & {
-  src: string;
-  matched: boolean;
-}
-
-type cardobj = {
+export interface cardobj {
   src: string;
   matched: boolean;
   id: number;
 }
 
+type obj = Omit<cardobj, 'id'>;
 
 export default function App() {
   const [cards, setCards] = useState<cardobj[] | null>([]);

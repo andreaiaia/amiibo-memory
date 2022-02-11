@@ -1,8 +1,4 @@
-type cardobj = {
-  src: string;
-  matched: boolean;
-  id: number;
-};
+import { cardobj } from './App'
 
 interface Props {
   disabled: boolean | null;
