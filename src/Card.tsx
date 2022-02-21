@@ -1,9 +1,9 @@
-import { cardobj } from './App'
+import { CardType, AmiiboCard } from './App'
 
 interface Props {
   disabled: boolean | null;
-  handleChoice: any;
-  card: cardobj;
+  handleChoice: (card: AmiiboCard) => void;
+  card: CardType;
   hidden: boolean;
 }
 

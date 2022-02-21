@@ -2,28 +2,28 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import "./styles.scss";
 
-export interface cardobj {
+export interface CardType {
   src: string;
   matched: boolean;
   id: number;
 }
 
-type obj = Omit<cardobj, 'id'>;
+export type AmiiboCard = Omit<CardType, "id">;
 
 export default function App() {
-  const [cards, setCards] = useState<cardobj[] | null>([]);
-  const [turns, setTurns] = useState<number | null>(0);
-  const [choiceOne, setChoiceOne] = useState<obj | null>(null);
-  const [choiceTwo, setChoiceTwo] = useState<obj | null>(null);
-  const [disabled, setDisabled] = useState<boolean | null>(false);
+  const [cards, setCards] = useState<CardType[]>([]);
+  const [turns, setTurns] = useState<number>(0);
+  const [choiceOne, setChoiceOne] = useState<AmiiboCard | null>(null);
+  const [choiceTwo, setChoiceTwo] = useState<AmiiboCard | null>(null);
+  const [disabled, setDisabled] = useState(false);
 
   const shuffle = (series: string) => {
     const url: string =
       "https://www.amiiboapi.com/api/amiibo/?gameseries=" + series;
-    const data: obj = httpGet(url);
-    const items: obj[] = generateItems(data);
+    const data: AmiiboCard = httpGet(url);
+    const items: AmiiboCard[] = generateItems(data);
 
-    const shuffled: cardobj[] = [...items, ...items]
+    const shuffled: CardType[] = [...items, ...items]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
 
@@ -33,7 +33,7 @@ export default function App() {
     setTurns(0);
   };
 
-  const handleChoice = (card: obj) => {
+  const handleChoice = (card: AmiiboCard): void => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -109,15 +109,17 @@ export default function App() {
 }
 
 // Helpers
-function httpGet(theUrl: string): obj {
+// Prova a usare un fetch o qualche libreria (axios)
+function httpGet(theUrl: string): AmiiboCard {
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.open("GET", theUrl, false);
   xmlHttp.send(null);
   return JSON.parse(xmlHttp.responseText);
 }
 
-function generateItems(data: any): obj[] {
-  const items: obj[] = [
+function generateItems(data: any): AmiiboCard[] {
+  console.log(data)
+  const items: AmiiboCard[] = [
     {
       src:
         data.amiibo[Math.floor(Math.random() * Object.keys(data.amiibo).length)]
