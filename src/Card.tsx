@@ -1,4 +1,4 @@
-import { CardType, AmiiboCard } from './App'
+import { CardType, AmiiboCard } from "./App";
 
 interface Props {
   disabled: boolean | null;
@@ -15,14 +15,14 @@ export default function Card(props: Props) {
   };
 
   return (
-    <div className="card">
+    <div className='card'>
       <div
         className={props.hidden ? "cardContainer" : "cardContainer cardHidden"}
       >
         <img
           className={props.hidden ? "image" : "image hidden"}
-          src={props.card.src}
-          alt="amiibo"
+          src={props.card.image}
+          alt='amiibo'
           onClick={handleClick}
         ></img>
       </div>
