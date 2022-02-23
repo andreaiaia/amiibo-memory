@@ -67,7 +67,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className='App'>
       <h1>Credimi coding challenge</h1>
       <h2>An amiibo card game</h2>
       <button
@@ -92,7 +92,7 @@ export default function App() {
         Mario Sports Superstars
       </button>
 
-      <div className="grid">
+      <div className='grid'>
         {cards!.map((card) => (
           <Card
             key={card.id}
@@ -114,36 +114,38 @@ function httpGet(theUrl: string): AmiiboCard {
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.open("GET", theUrl, false);
   xmlHttp.send(null);
+  console.log(xmlHttp.responseText);
+
   return JSON.parse(xmlHttp.responseText);
 }
 
 function generateItems(data: any): AmiiboCard[] {
-  console.log(data)
+  console.log(data);
   const items: AmiiboCard[] = [
     {
-      src:
-        data.amiibo[Math.floor(Math.random() * Object.keys(data.amiibo).length)]
-          .image,
-      matched: false
+      src: data.amiibo[
+        Math.floor(Math.random() * Object.keys(data.amiibo).length)
+      ].image,
+      matched: false,
     },
     {
-      src:
-        data.amiibo[Math.floor(Math.random() * Object.keys(data.amiibo).length)]
-          .image,
-      matched: false
+      src: data.amiibo[
+        Math.floor(Math.random() * Object.keys(data.amiibo).length)
+      ].image,
+      matched: false,
     },
     {
-      src:
-        data.amiibo[Math.floor(Math.random() * Object.keys(data.amiibo).length)]
-          .image,
-      matched: false
+      src: data.amiibo[
+        Math.floor(Math.random() * Object.keys(data.amiibo).length)
+      ].image,
+      matched: false,
     },
     {
-      src:
-        data.amiibo[Math.floor(Math.random() * Object.keys(data.amiibo).length)]
-          .image,
-      matched: false
-    }
+      src: data.amiibo[
+        Math.floor(Math.random() * Object.keys(data.amiibo).length)
+      ].image,
+      matched: false,
+    },
   ];
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
