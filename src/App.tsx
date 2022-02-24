@@ -2,17 +2,13 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import "./styles.scss";
 
-interface AmiiboFetched {
+type AmiiboFetched = {
   image: string;
-}
-
-export interface AmiiboCard {
-  image: string;
+};
+export interface AmiiboCard extends AmiiboFetched {
   matched: boolean;
 }
-export interface CardType {
-  image: string;
-  matched: boolean;
+export interface CardType extends AmiiboCard {
   id: number;
 }
 
@@ -23,10 +19,10 @@ export default function App() {
   const [choiceTwo, setChoiceTwo] = useState<AmiiboCard | null>(null);
   const [disabled, setDisabled] = useState(false);
 
-  const shuffle = (series: string) => {
+  const shuffle = async (series: string) => {
     const url: string =
       "https://www.amiiboapi.com/api/amiibo/?gameseries=" + series;
-    const data: AmiiboFetched[] = getData(url);
+    const data: AmiiboFetched[] | undefined = await getData(url);
     const items: AmiiboCard[] = generateItems(data);
 
     const shuffled: CardType[] = [...items, ...items]
@@ -115,32 +111,34 @@ export default function App() {
 }
 
 // Helpers
-// Prova a usare un fetch o qualche libreria (axios)
-function getData(theUrl: string): AmiiboFetched[] {
-  // const fetchedData = JSON.parse(fetch(theUrl).toString());
-  let xmlHttp = new XMLHttpRequest();
-  xmlHttp.open("GET", theUrl, false);
-  xmlHttp.send(null);
-  const fetchedData = JSON.parse(xmlHttp.responseText);
-  const myCards: AmiiboFetched[] = [];
-  fetchedData.amiibo.forEach((amiibo: any) => {
-    const image: AmiiboFetched = { image: amiibo.image };
-    myCards.push(image);
-  });
-
-  return myCards;
+async function getData(theUrl: string) {
+  try {
+    const fetchedData = await fetch(theUrl);
+    const data = await fetchedData.json();
+    const myCards: AmiiboFetched[] = [];
+    data.amiibo.forEach((amiibo: any) => {
+      const image: AmiiboFetched = { image: amiibo.image };
+      myCards.push(image);
+    });
+    return myCards;
+  } catch (err) {
+    alert(err);
+  }
 }
 
-function generateItems(data: AmiiboFetched[]): AmiiboCard[] {
+// TODO: permetti di scegliere quante carte usare
+function generateItems(data: AmiiboFetched[] | undefined): AmiiboCard[] {
   const items: AmiiboCard[] = [];
-  for (let i = 0; i < 4; i++) {
-    const randNum: number = Math.floor(Math.random() * data.length);
-    const { image } = data[randNum];
-    items.push({
-      image,
-      matched: false,
-    });
-    data.splice(randNum, randNum + 1);
+  if (data) {
+    for (let i = 0; i < 4; i++) {
+      const randNum: number = Math.floor(Math.random() * data.length);
+      const { image } = data[randNum];
+      items.push({
+        image,
+        matched: false,
+      });
+      data.splice(randNum, randNum + 1);
+    }
   }
 
   return items;
