@@ -12,6 +12,8 @@ export type AmiiboCard = Omit<CardType, "id">;
 type AmiiboFetched = Pick<CardType, "image">;
 
 export default function App() {
+  const [info, setInfo] = useState<string>("Easy");
+  const [series, setSeries] = useState<string>("Pokemon");
   const [level, setLevel] = useState<number>(4);
   const [cards, setCards] = useState<CardType[]>([]);
   const [turns, setTurns] = useState<number>(0);
@@ -65,17 +67,20 @@ export default function App() {
   };
 
   useEffect(() => {
-    shuffle("Pokemon", level);
+    shuffle(series, level);
   }, []);
 
   return (
     <div className='App'>
       <h1>Credimi coding challenge</h1>
       <h2>An amiibo card game</h2>
+      <h3>Difficulty: {info}</h3>
       <div>
         <button
           onClick={() => {
             setLevel(4);
+            setInfo("Easy");
+            shuffle(series, level);
           }}
         >
           Easy
@@ -83,6 +88,8 @@ export default function App() {
         <button
           onClick={() => {
             setLevel(6);
+            setInfo("Medium");
+            shuffle(series, level);
           }}
         >
           Medium
@@ -90,6 +97,8 @@ export default function App() {
         <button
           onClick={() => {
             setLevel(8);
+            setInfo("Hard");
+            shuffle(series, level);
           }}
         >
           Hard
@@ -97,21 +106,24 @@ export default function App() {
       </div>
       <button
         onClick={() => {
-          shuffle("Pokemon", level);
+          setSeries("Pokemon");
+          shuffle(series, level);
         }}
       >
         Pokemons
       </button>
       <button
         onClick={() => {
-          shuffle("animal%20crossing", level);
+          setSeries("animal%20crossing");
+          shuffle(series, level);
         }}
       >
         Animal Crossing
       </button>
       <button
         onClick={() => {
-          shuffle("Mario%20Sports%20Superstars", level);
+          setSeries("Mario%20Sports%20Superstars");
+          shuffle(series, level);
         }}
       >
         Mario Sports Superstars
