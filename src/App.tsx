@@ -2,28 +2,30 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import "./styles.scss";
 
-type AmiiboFetched = {
+export interface CardType {
   image: string;
-};
-export interface AmiiboCard extends AmiiboFetched {
   matched: boolean;
-}
-export interface CardType extends AmiiboCard {
   id: number;
 }
+export type AmiiboCard = Omit<CardType, "id">;
+
+type AmiiboFetched = Pick<CardType, "image">;
 
 export default function App() {
+  const [info, setInfo] = useState<string>("Easy");
+  const [series, setSeries] = useState<string>("Pokemon");
+  const [level, setLevel] = useState<number>(4);
   const [cards, setCards] = useState<CardType[]>([]);
   const [turns, setTurns] = useState<number>(0);
   const [choiceOne, setChoiceOne] = useState<AmiiboCard | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<AmiiboCard | null>(null);
   const [disabled, setDisabled] = useState(false);
 
-  const shuffle = async (series: string) => {
+  const shuffle = async (series: string, level: number) => {
     const url: string =
       "https://www.amiiboapi.com/api/amiibo/?gameseries=" + series;
     const data: AmiiboFetched[] | undefined = await getData(url);
-    const items: AmiiboCard[] = generateItems(data);
+    const items: AmiiboCard[] = generateItems(data, level);
 
     const shuffled: CardType[] = [...items, ...items]
       .sort(() => Math.random() - 0.5)
@@ -65,30 +67,63 @@ export default function App() {
   };
 
   useEffect(() => {
-    shuffle("Pokemon");
+    shuffle(series, level);
   }, []);
 
   return (
     <div className='App'>
       <h1>Credimi coding challenge</h1>
       <h2>An amiibo card game</h2>
+      <h3>Difficulty: {info}</h3>
+      <div>
+        <button
+          onClick={() => {
+            setLevel(4);
+            setInfo("Easy");
+            shuffle(series, level);
+          }}
+        >
+          Easy
+        </button>
+        <button
+          onClick={() => {
+            setLevel(6);
+            setInfo("Medium");
+            shuffle(series, level);
+          }}
+        >
+          Medium
+        </button>
+        <button
+          onClick={() => {
+            setLevel(8);
+            setInfo("Hard");
+            shuffle(series, level);
+          }}
+        >
+          Hard
+        </button>
+      </div>
       <button
         onClick={() => {
-          shuffle("Pokemon");
+          setSeries("Pokemon");
+          shuffle(series, level);
         }}
       >
         Pokemons
       </button>
       <button
         onClick={() => {
-          shuffle("animal%20crossing");
+          setSeries("animal%20crossing");
+          shuffle(series, level);
         }}
       >
         Animal Crossing
       </button>
       <button
         onClick={() => {
-          shuffle("Mario%20Sports%20Superstars");
+          setSeries("Mario%20Sports%20Superstars");
+          shuffle(series, level);
         }}
       >
         Mario Sports Superstars
@@ -127,10 +162,13 @@ async function getData(theUrl: string) {
 }
 
 // TODO: permetti di scegliere quante carte usare
-function generateItems(data: AmiiboFetched[] | undefined): AmiiboCard[] {
+function generateItems(
+  data: AmiiboFetched[] | undefined,
+  level: number
+): AmiiboCard[] {
   const items: AmiiboCard[] = [];
   if (data) {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < level; i++) {
       const randNum: number = Math.floor(Math.random() * data.length);
       const { image } = data[randNum];
       items.push({
