@@ -4,32 +4,37 @@ import "./styles.scss";
 
 export interface CardType {
   image: string;
-  matched: boolean;
   id: number;
+  matched: boolean;
+  selected: boolean;
 }
-export type AmiiboCard = Omit<CardType, "id">;
-
 type AmiiboFetched = Pick<CardType, "image">;
+type AmiiboType = Omit<CardType, "id">;
 
 export default function App() {
   const [info, setInfo] = useState<string>("Easy");
-  const [series, setSeries] = useState<string>("Pokemon");
   const [level, setLevel] = useState<number>(4);
+  const [series, setSeries] = useState<string>("Pokemon");
   const [cards, setCards] = useState<CardType[]>([]);
   const [turns, setTurns] = useState<number>(0);
-  const [choiceOne, setChoiceOne] = useState<AmiiboCard | null>(null);
-  const [choiceTwo, setChoiceTwo] = useState<AmiiboCard | null>(null);
+  const [choiceOne, setChoiceOne] = useState<CardType | null>(null);
+  const [choiceTwo, setChoiceTwo] = useState<CardType | null>(null);
   const [disabled, setDisabled] = useState(false);
 
   const shuffle = async (series: string, level: number) => {
+    // Fai funzione a parte per il recupero dati
     const url: string =
       "https://www.amiiboapi.com/api/amiibo/?gameseries=" + series;
     const data: AmiiboFetched[] | undefined = await getData(url);
-    const items: AmiiboCard[] = generateItems(data, level);
+    const items: AmiiboType[] = generateItems(data, level);
 
-    const shuffled: CardType[] = [...items, ...items]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
+    const shuffled: CardType[] = [...items, ...items].map((item, index) => {
+      const itemWithId: CardType = {
+        ...item,
+        id: index,
+      };
+      return itemWithId;
+    });
 
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -37,12 +42,24 @@ export default function App() {
     setTurns(0);
   };
 
-  const handleChoice = (card: AmiiboCard): void => {
+  useEffect(() => {
+    console.log(cards);
+  }, [cards]);
+
+  const handleChoice = (card: CardType): void => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+    setCards(
+      cards.map((c, index) => {
+        if (card.id === index) c.selected = true;
+        return c;
+      })
+    );
   };
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      console.log(choiceOne);
+      console.log(choiceTwo);
       setDisabled(true);
       if (choiceOne.image === choiceTwo.image) {
         setCards((prevCards) => {
@@ -64,11 +81,18 @@ export default function App() {
     setChoiceTwo(null);
     setTurns((prevTurns) => prevTurns! + 1);
     setDisabled(false);
+    setCards(
+      cards.map((c) => {
+        if (c.matched === false) c.selected = false;
+        return c;
+      })
+    );
   };
 
   useEffect(() => {
     shuffle(series, level);
-  }, []);
+    console.log(cards);
+  }, [level, series]);
 
   return (
     <div className='App'>
@@ -76,7 +100,11 @@ export default function App() {
       <h2>An amiibo card game</h2>
       <h3>Difficulty: {info}</h3>
       <div>
+        {/* TODO: Aggiungere info per screenreader */}
+        {/* TODO: Prova con UseEffect */}
+        {/* TODO: fai componente per i bottoni */}
         <button
+          type='button'
           onClick={() => {
             setLevel(4);
             setInfo("Easy");
@@ -130,12 +158,12 @@ export default function App() {
       </button>
 
       <div className='grid'>
-        {cards!.map((card) => (
+        {cards!.map((card, index) => (
           <Card
-            key={card.id}
+            key={index}
             card={card}
             handleChoice={handleChoice}
-            hidden={card === choiceOne || card === choiceTwo || card.matched}
+            clicked={card.selected}
             disabled={disabled}
           />
         ))}
@@ -165,8 +193,8 @@ async function getData(theUrl: string) {
 function generateItems(
   data: AmiiboFetched[] | undefined,
   level: number
-): AmiiboCard[] {
-  const items: AmiiboCard[] = [];
+): AmiiboType[] {
+  const items: AmiiboType[] = [];
   if (data) {
     for (let i = 0; i < level; i++) {
       const randNum: number = Math.floor(Math.random() * data.length);
@@ -174,6 +202,7 @@ function generateItems(
       items.push({
         image,
         matched: false,
+        selected: false,
       });
       data.splice(randNum, randNum + 1);
     }

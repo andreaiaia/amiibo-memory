@@ -1,10 +1,10 @@
-import { CardType, AmiiboCard } from "./App";
+import { CardType } from "./App";
 
 interface Props {
   disabled: boolean | null;
-  handleChoice: (card: AmiiboCard) => void;
+  handleChoice: (card: CardType) => void;
   card: CardType;
-  hidden: boolean;
+  clicked: boolean;
 }
 
 export default function Card(props: Props) {
@@ -17,10 +17,10 @@ export default function Card(props: Props) {
   return (
     <div className='card'>
       <div
-        className={props.hidden ? "cardContainer" : "cardContainer cardHidden"}
+        className={props.clicked ? "cardContainer" : "cardContainer cardHidden"}
       >
         <img
-          className={props.hidden ? "image" : "image hidden"}
+          className={props.clicked ? "image" : "image hidden"}
           src={props.card.image}
           alt='amiibo'
           onClick={handleClick}
