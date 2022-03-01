@@ -1,7 +1,6 @@
 import { CardType } from "./App";
 
 interface Props {
-  disabled: boolean | null;
   handleChoice: (card: CardType) => void;
   card: CardType;
   clicked: boolean;
@@ -9,7 +8,7 @@ interface Props {
 
 export default function Card(props: Props) {
   const handleClick = () => {
-    if (!props.disabled) {
+    if (!props.clicked) {
       props.handleChoice(props.card);
     }
   };

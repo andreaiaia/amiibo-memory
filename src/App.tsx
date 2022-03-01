@@ -9,7 +9,6 @@ export interface CardType {
   selected: boolean;
 }
 type AmiiboFetched = Pick<CardType, "image">;
-type AmiiboType = Omit<CardType, "id">;
 
 export default function App() {
   const [info, setInfo] = useState<string>("Easy");
@@ -19,38 +18,36 @@ export default function App() {
   const [turns, setTurns] = useState<number>(0);
   const [choiceOne, setChoiceOne] = useState<CardType | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<CardType | null>(null);
-  const [disabled, setDisabled] = useState(false);
 
   const shuffle = async (series: string, level: number) => {
-    // Fai funzione a parte per il recupero dati
-    const url: string =
-      "https://www.amiiboapi.com/api/amiibo/?gameseries=" + series;
-    const data: AmiiboFetched[] | undefined = await getData(url);
-    const items: AmiiboType[] = generateItems(data, level);
-
-    const shuffled: CardType[] = [...items, ...items].map((item, index) => {
-      const itemWithId: CardType = {
-        ...item,
-        id: index,
-      };
-      return itemWithId;
-    });
-
+    const items: CardType[] = generateItems(await getData(series), level);
     setChoiceOne(null);
     setChoiceTwo(null);
-    setCards(shuffled);
+    setCards(items);
     setTurns(0);
   };
 
-  useEffect(() => {
-    console.log(cards);
-  }, [cards]);
+  // useEffect(() => {
+  //   console.log(cards);
+  // }, [cards]);
+
+  const reset = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns! + 1);
+    setCards(
+      cards.map((c) => {
+        if (c.matched === false) return { ...c, selected: false };
+        return { ...c, matched: true, selected: true };
+      })
+    );
+  };
 
   const handleChoice = (card: CardType): void => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
     setCards(
-      cards.map((c, index) => {
-        if (card.id === index) c.selected = true;
+      cards.map((c) => {
+        if (card.id === c.id) c.selected = true;
         return c;
       })
     );
@@ -60,12 +57,11 @@ export default function App() {
     if (choiceOne && choiceTwo) {
       console.log(choiceOne);
       console.log(choiceTwo);
-      setDisabled(true);
       if (choiceOne.image === choiceTwo.image) {
         setCards((prevCards) => {
           return prevCards!.map((card) => {
-            if (card.image === choiceOne.image) {
-              return { ...card, matched: true };
+            if (card.id === choiceOne.id || card.id === choiceTwo.id) {
+              return { ...card, matched: true, selected: true };
             } else {
               return card;
             }
@@ -74,24 +70,11 @@ export default function App() {
       }
       setTimeout(() => reset(), 500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [choiceOne, choiceTwo]);
-
-  const reset = () => {
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setTurns((prevTurns) => prevTurns! + 1);
-    setDisabled(false);
-    setCards(
-      cards.map((c) => {
-        if (c.matched === false) c.selected = false;
-        return c;
-      })
-    );
-  };
 
   useEffect(() => {
     shuffle(series, level);
-    console.log(cards);
   }, [level, series]);
 
   return (
@@ -158,13 +141,12 @@ export default function App() {
       </button>
 
       <div className='grid'>
-        {cards!.map((card, index) => (
+        {cards!.map((card) => (
           <Card
-            key={index}
+            key={card.id}
             card={card}
             handleChoice={handleChoice}
             clicked={card.selected}
-            disabled={disabled}
           />
         ))}
       </div>
@@ -174,7 +156,9 @@ export default function App() {
 }
 
 // Helpers
-async function getData(theUrl: string) {
+async function getData(series: string) {
+  const theUrl: string =
+    "https://www.amiiboapi.com/api/amiibo/?gameseries=" + series;
   try {
     const fetchedData = await fetch(theUrl);
     const data = await fetchedData.json();
@@ -185,16 +169,16 @@ async function getData(theUrl: string) {
     });
     return myCards;
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 }
 
-// TODO: permetti di scegliere quante carte usare
 function generateItems(
   data: AmiiboFetched[] | undefined,
   level: number
-): AmiiboType[] {
-  const items: AmiiboType[] = [];
+): CardType[] {
+  const items: CardType[] = [];
+  const itemsWithId: CardType[] = [];
   if (data) {
     for (let i = 0; i < level; i++) {
       const randNum: number = Math.floor(Math.random() * data.length);
@@ -203,10 +187,22 @@ function generateItems(
         image,
         matched: false,
         selected: false,
+        id: 0,
       });
       data.splice(randNum, randNum + 1);
     }
+    items.push(...items);
+    items.forEach((value, index) => {
+      itemsWithId.push({
+        ...value,
+        id: index,
+      });
+      return value;
+    });
   }
+  return shuffleArray(itemsWithId);
+}
 
-  return items;
+function shuffleArray(items: CardType[]): CardType[] {
+  return items.sort(() => Math.random() - 0.5);
 }
