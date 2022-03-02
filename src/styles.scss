@@ -44,11 +44,18 @@ h2 {
   font-weight: 700;
 }
 .buttons {
-  border: 3px solid colors.$primary;
-  border-radius: 3px;
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+.diffChoice {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+.seriesChoice {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardGrid {
@@ -63,6 +70,7 @@ img {
   width: 150px;
   height: auto;
   transition: 0.2s ease;
+  border-radius: 10px;
 }
 .hidden {
   opacity: 0;
@@ -71,9 +79,10 @@ button {
   font-weight: 600;
   font-size: 0.9rem;
   padding: 10px 15px;
-  border: 2px solid colors.$bg_primary;
+  margin: 1px;
+  border: 4px solid colors.$bg_primary;
   background: #00d9ff;
-  transition: 0.3s ease;
+  transition: 0.2s ease-in;
 
   &:hover {
     background: colors.$btn_hover;
@@ -85,5 +94,6 @@ button {
   }
 }
 .selectedBtn {
-  background: colors.$primary;
+  border: 4px solid colors.$primary;
+  border-radius: 4px;
 }

@@ -111,69 +111,90 @@ export default function App() {
           </div>
         </div>
         <div className='buttons'>
-          <button
-            type='button'
-            name='Easy game'
-            className={level === levelConf[0] ? "selectedBtn" : ""}
-            onClick={() => {
-              setLevel(levelConf[0]);
-              shuffle(series, level);
-            }}
-          >
-            Easy
-          </button>
-          <button
-            type='button'
-            className={level === levelConf[1] ? "selectedBtn" : ""}
-            name='Medium game'
-            onClick={() => {
-              setLevel(levelConf[1]);
-              shuffle(series, level);
-            }}
-          >
-            Medium
-          </button>
-          <button
-            type='button'
-            className={level === levelConf[2] ? "selectedBtn" : ""}
-            name='Hard game'
-            onClick={() => {
-              setLevel(levelConf[2]);
-              shuffle(series, level);
-            }}
-          >
-            Hard
-          </button>
-          <button
-            type='button'
-            name='Play with Pokemon Cards'
-            onClick={() => {
-              setSeries("Pokemon");
-              shuffle(series, level);
-            }}
-          >
-            Pokemons
-          </button>
-          <button
-            type='button'
-            name='Play with Animal Crossing Cards'
-            onClick={() => {
-              setSeries("animal%20crossing");
-              shuffle(series, level);
-            }}
-          >
-            Animal Crossing
-          </button>
-          <button
-            type='button'
-            name='Play with Mario Sports Superstars Cards'
-            onClick={() => {
-              setSeries("Mario%20Sports%20Superstars");
-              shuffle(series, level);
-            }}
-          >
-            Mario Sports Superstars
-          </button>
+          <div className='diffChoice'>
+            <button
+              type='button'
+              name='Easy game'
+              className={
+                level.label === levelConf[0].label
+                  ? "selectedBtn easyBtn"
+                  : "easyBtn"
+              }
+              onClick={() => {
+                setLevel(levelConf[0]);
+                shuffle(series, level);
+              }}
+            >
+              Easy
+            </button>
+            <button
+              type='button'
+              className={
+                level.label === levelConf[1].label
+                  ? "selectedBtn mediumBtn"
+                  : "mediumBtn"
+              }
+              name='Medium game'
+              onClick={() => {
+                setLevel(levelConf[1]);
+                shuffle(series, level);
+              }}
+            >
+              Medium
+            </button>
+            <button
+              type='button'
+              className={
+                level.label === levelConf[2].label
+                  ? "selectedBtn hardBtn"
+                  : "hardBtn"
+              }
+              name='Hard game'
+              onClick={() => {
+                setLevel(levelConf[2]);
+                shuffle(series, level);
+              }}
+            >
+              Hard
+            </button>
+          </div>
+          <div className='seriesChoice'>
+            <button
+              type='button'
+              name='Play with Pokemon Cards'
+              className={series === "Pokemon" ? "selectedBtn" : ""}
+              onClick={() => {
+                setSeries("Pokemon");
+                shuffle(series, level);
+              }}
+            >
+              Pokemon
+            </button>
+            <button
+              type='button'
+              name='Play with Animal Crossing Cards'
+              className={series === "animal%20crossing" ? "selectedBtn" : ""}
+              onClick={() => {
+                setSeries("animal%20crossing");
+                shuffle(series, level);
+              }}
+            >
+              Animal Crossing
+            </button>
+            <button
+              type='button'
+              name='Play with Mario Sports Superstars Cards'
+              className={
+                series === "Mario%20Sports%20Superstars" ? "selectedBtn" : ""
+              }
+              onClick={() => {
+                setSeries("Mario%20Sports%20Superstars");
+                shuffle(series, level);
+              }}
+            >
+              Mario Sports Superstars
+            </button>
+          </div>
         </div>
       </div>
       <div className='cardGrid'>
