@@ -1,12 +1,12 @@
 @use "colors";
-@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital@0;1&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&&display=swap");
+@use "fonts";
 
 body {
   background-color: colors.$bg_secondary;
   margin: 0;
 }
 .App {
-  font-family: sans-serif;
+  font-family: fonts.$secondary_font;
   text-align: center;
 }
 .header {
@@ -33,25 +33,22 @@ body {
   text-align: left;
 }
 h1 {
+  font-size: 2.4rem;
   color: colors.$primary;
-  font-weight: 700;
-  font-family: "Source Sans Pro", serif;
+  font-family: fonts.$primary_font;
 }
 h2 {
   color: colors.$secondary;
-  font-family: "Source Sans Pro", sans-serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: fonts.$secondary_font;
 }
 .turns {
   color: white;
-  font-family: "Source Code Pro", monospace;
-  font-weight: 700;
+  font-family: fonts.$secondary_font;
   font-size: 1.2rem;
 }
 .buttons {
   display: grid;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: fonts.$secondary_font;
   grid-template-columns: 1fr 1fr;
 }
 .diffChoice {
@@ -82,7 +79,7 @@ img {
   opacity: 0;
 }
 button {
-  font-weight: 600;
+  font-family: fonts.$secondary_font;
   font-size: 1rem;
   padding: 10px 15px;
   margin: 1px;
