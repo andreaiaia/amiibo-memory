@@ -10,16 +10,35 @@ export interface CardType {
 }
 type AmiiboFetched = Pick<CardType, "image">;
 
+type LevelLabel = "Easy" | "Medium" | "Hard";
+type LevelType = {
+  label: LevelLabel;
+  cardsNumber: 4 | 6 | 8;
+};
+
 export default function App() {
-  const [info, setInfo] = useState<string>("Easy");
-  const [level, setLevel] = useState<number>(4);
+  const levelConf: LevelType[] = [
+    {
+      label: "Easy",
+      cardsNumber: 4,
+    },
+    {
+      label: "Medium",
+      cardsNumber: 6,
+    },
+    {
+      label: "Hard",
+      cardsNumber: 8,
+    },
+  ];
+  const [level, setLevel] = useState<LevelType>(levelConf[0]);
   const [series, setSeries] = useState<string>("Pokemon");
   const [cards, setCards] = useState<CardType[]>([]);
   const [turns, setTurns] = useState<number>(0);
   const [choiceOne, setChoiceOne] = useState<CardType | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<CardType | null>(null);
 
-  const shuffle = async (series: string, level: number) => {
+  const shuffle = async (series: string, level: LevelType) => {
     const items: CardType[] = generateItems(await getData(series), level);
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -27,20 +46,19 @@ export default function App() {
     setTurns(0);
   };
 
-  // useEffect(() => {
-  //   console.log(cards);
-  // }, [cards]);
-
   const reset = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prevTurns) => prevTurns! + 1);
-    setCards(
-      cards.map((c) => {
-        if (c.matched === false) return { ...c, selected: false };
-        return { ...c, matched: true, selected: true };
-      })
-    );
+    setCards((cards) => {
+      return cards.map((c) => {
+        if (c.matched === false) {
+          return { ...c, selected: false };
+        } else {
+          return { ...c, matched: true, selected: true };
+        }
+      });
+    });
   };
 
   const handleChoice = (card: CardType): void => {
@@ -81,34 +99,37 @@ export default function App() {
     <div className='App'>
       <h1>Credimi coding challenge</h1>
       <h2>An amiibo card game</h2>
-      <h3>Difficulty: {info}</h3>
+      <h3>Difficulty: {level.label}</h3>
       <div>
-        {/* TODO: Aggiungere info per screenreader */}
         {/* TODO: Prova con UseEffect */}
         {/* TODO: fai componente per i bottoni */}
         <button
           type='button'
+          name='Easy game'
           onClick={() => {
-            setLevel(4);
-            setInfo("Easy");
+            setLevel(levelConf[0]);
+            console.log(level);
+
             shuffle(series, level);
           }}
         >
           Easy
         </button>
         <button
+          type='button'
+          name='Medium game'
           onClick={() => {
-            setLevel(6);
-            setInfo("Medium");
+            setLevel(levelConf[1]);
             shuffle(series, level);
           }}
         >
           Medium
         </button>
         <button
+          type='button'
+          name='Hard game'
           onClick={() => {
-            setLevel(8);
-            setInfo("Hard");
+            setLevel(levelConf[2]);
             shuffle(series, level);
           }}
         >
@@ -116,6 +137,8 @@ export default function App() {
         </button>
       </div>
       <button
+        type='button'
+        name='Play with Pokemon Cards'
         onClick={() => {
           setSeries("Pokemon");
           shuffle(series, level);
@@ -124,6 +147,8 @@ export default function App() {
         Pokemons
       </button>
       <button
+        type='button'
+        name='Play with Animal Crossing Cards'
         onClick={() => {
           setSeries("animal%20crossing");
           shuffle(series, level);
@@ -132,6 +157,8 @@ export default function App() {
         Animal Crossing
       </button>
       <button
+        type='button'
+        name='Play with Mario Sports Superstars Cards'
         onClick={() => {
           setSeries("Mario%20Sports%20Superstars");
           shuffle(series, level);
@@ -175,12 +202,12 @@ async function getData(series: string) {
 
 function generateItems(
   data: AmiiboFetched[] | undefined,
-  level: number
+  level: LevelType
 ): CardType[] {
   const items: CardType[] = [];
   const itemsWithId: CardType[] = [];
   if (data) {
-    for (let i = 0; i < level; i++) {
+    for (let i = 0; i < level.cardsNumber; i++) {
       const randNum: number = Math.floor(Math.random() * data.length);
       const { image } = data[randNum];
       items.push({
