@@ -97,87 +97,95 @@ export default function App() {
 
   return (
     <div className='App'>
-      <h1>Credimi coding challenge</h1>
-      <h2>An amiibo card game</h2>
-      <h3>Difficulty: {level.label}</h3>
-      <div>
-        {/* TODO: Prova con UseEffect */}
-        {/* TODO: fai componente per i bottoni */}
-        <button
-          type='button'
-          name='Easy game'
-          onClick={() => {
-            setLevel(levelConf[0]);
-            console.log(level);
-
-            shuffle(series, level);
-          }}
-        >
-          Easy
-        </button>
-        <button
-          type='button'
-          name='Medium game'
-          onClick={() => {
-            setLevel(levelConf[1]);
-            shuffle(series, level);
-          }}
-        >
-          Medium
-        </button>
-        <button
-          type='button'
-          name='Hard game'
-          onClick={() => {
-            setLevel(levelConf[2]);
-            shuffle(series, level);
-          }}
-        >
-          Hard
-        </button>
+      <div className='header'>
+        <div className='hero'>
+          <img
+            className='logo'
+            src={require("./img/credimi_logo.jpg")}
+            alt='Credimi'
+          />
+          <div className='texts'>
+            <h1>Coding Challenge</h1>
+            <h2>An Amiibo Card Game</h2>
+            <p className='turns'>Turni: {turns}</p>
+          </div>
+        </div>
+        <div className='buttons'>
+          <button
+            type='button'
+            name='Easy game'
+            className={level === levelConf[0] ? "selectedBtn" : ""}
+            onClick={() => {
+              setLevel(levelConf[0]);
+              shuffle(series, level);
+            }}
+          >
+            Easy
+          </button>
+          <button
+            type='button'
+            className={level === levelConf[1] ? "selectedBtn" : ""}
+            name='Medium game'
+            onClick={() => {
+              setLevel(levelConf[1]);
+              shuffle(series, level);
+            }}
+          >
+            Medium
+          </button>
+          <button
+            type='button'
+            className={level === levelConf[2] ? "selectedBtn" : ""}
+            name='Hard game'
+            onClick={() => {
+              setLevel(levelConf[2]);
+              shuffle(series, level);
+            }}
+          >
+            Hard
+          </button>
+          <button
+            type='button'
+            name='Play with Pokemon Cards'
+            onClick={() => {
+              setSeries("Pokemon");
+              shuffle(series, level);
+            }}
+          >
+            Pokemons
+          </button>
+          <button
+            type='button'
+            name='Play with Animal Crossing Cards'
+            onClick={() => {
+              setSeries("animal%20crossing");
+              shuffle(series, level);
+            }}
+          >
+            Animal Crossing
+          </button>
+          <button
+            type='button'
+            name='Play with Mario Sports Superstars Cards'
+            onClick={() => {
+              setSeries("Mario%20Sports%20Superstars");
+              shuffle(series, level);
+            }}
+          >
+            Mario Sports Superstars
+          </button>
+        </div>
       </div>
-      <button
-        type='button'
-        name='Play with Pokemon Cards'
-        onClick={() => {
-          setSeries("Pokemon");
-          shuffle(series, level);
-        }}
-      >
-        Pokemons
-      </button>
-      <button
-        type='button'
-        name='Play with Animal Crossing Cards'
-        onClick={() => {
-          setSeries("animal%20crossing");
-          shuffle(series, level);
-        }}
-      >
-        Animal Crossing
-      </button>
-      <button
-        type='button'
-        name='Play with Mario Sports Superstars Cards'
-        onClick={() => {
-          setSeries("Mario%20Sports%20Superstars");
-          shuffle(series, level);
-        }}
-      >
-        Mario Sports Superstars
-      </button>
-
-      <div className='grid'>
+      <div className='cardGrid'>
         {cards!.map((card) => (
           <Card
             key={card.id}
             card={card}
             handleChoice={handleChoice}
-            clicked={card.selected}
+            clicked={card.selected || card.matched}
           />
         ))}
       </div>
-      <p>Turns: {turns}</p>
     </div>
   );
 }

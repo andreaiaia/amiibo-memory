@@ -1,19 +1,63 @@
-/*
-TODO:
-Definire variabili
-Prova a usare i mixin
-*/
+@use "colors";
 
+body {
+  background-color: colors.$bg_secondary;
+  margin: 0;
+}
 .App {
   font-family: sans-serif;
   text-align: center;
 }
-.grid {
-  margin-top: 3em;
+.header {
+  padding: 1.2rem;
+  background-color: colors.$bg_primary;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.logo {
+  max-width: 150px;
+  height: auto;
+  justify-self: center;
+  border-radius: 10px;
+}
+.texts {
+  justify-self: start;
+  text-align: left;
+}
+h1 {
+  color: colors.$primary;
+}
+h2 {
+  color: colors.$secondary;
+  font-style: italic;
+  font-weight: 400;
+}
+.turns {
+  color: white;
+  font-weight: 700;
+}
+.buttons {
+  border: 3px solid colors.$primary;
+  border-radius: 3px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cardGrid {
+  margin: 3rem auto 5rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
   justify-items: center;
+  max-width: 1000px;
 }
 img {
   width: 150px;
@@ -23,33 +67,23 @@ img {
 .hidden {
   opacity: 0;
 }
-.cardContainer {
-  width: 180px;
-  height: 270px;
-  border: 2px solid black;
-  border-radius: 10px;
-  background-color: #ddd;
-  display: grid;
-  justify-items: center;
-  place-items: center;
-}
-.cardHidden {
-  background-color: #fff;
-}
 button {
-  padding: 5px 10px;
-  margin: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
-  background: cornsilk;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 10px 15px;
+  border: 2px solid colors.$bg_primary;
+  background: #00d9ff;
   transition: 0.3s ease;
 
   &:hover {
-    background: #fcddc4;
+    background: colors.$btn_hover;
   }
 
   &:active {
     transform: scale(0.9);
-    background: #fcddc4;
+    background: colors.$btn_active;
   }
+}
+.selectedBtn {
+  background: colors.$primary;
 }

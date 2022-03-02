@@ -1,4 +1,5 @@
 import { CardType } from "./App";
+import "./card.scss";
 
 interface Props {
   handleChoice: (card: CardType) => void;
@@ -19,11 +20,16 @@ export default function Card(props: Props) {
         className={props.clicked ? "cardContainer" : "cardContainer cardHidden"}
       >
         <img
-          className={props.clicked ? "image" : "image hidden"}
+          className={props.clicked ? "front" : "front hidden"}
           src={props.card.image}
           alt='amiibo'
           onClick={handleClick}
-        ></img>
+        />
+        <img
+          className={props.clicked ? "back hidden" : "back"}
+          src={require("./img/back.png")}
+          alt='card back'
+        />
       </div>
     </div>
   );
