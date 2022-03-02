@@ -22,7 +22,7 @@ body {
   align-items: center;
 }
 .logo {
-  max-width: 150px;
+  max-width: 140px;
   height: auto;
   justify-self: center;
   border-radius: 10px;
@@ -42,6 +42,7 @@ h2 {
 .turns {
   color: white;
   font-weight: 700;
+  font-size: 1.2rem;
 }
 .buttons {
   display: grid;
@@ -77,7 +78,7 @@ img {
 }
 button {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 10px 15px;
   margin: 1px;
   border: 4px solid colors.$bg_primary;
@@ -96,4 +97,13 @@ button {
 .selectedBtn {
   border: 4px solid colors.$primary;
   border-radius: 4px;
+}
+.easyBtn {
+  background-color: colors.$easy;
+}
+.mediumBtn {
+  background-color: colors.$medium;
+}
+.hardBtn {
+  background-color: colors.$hard;
 }
