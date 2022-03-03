@@ -73,8 +73,6 @@ export default function App() {
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
-      console.log(choiceOne);
-      console.log(choiceTwo);
       if (choiceOne.image === choiceTwo.image) {
         setCards((prevCards) => {
           return prevCards!.map((card) => {
@@ -197,13 +195,14 @@ export default function App() {
           </div>
         </div>
       </div>
-      <div className='cardGrid'>
+      <div className={level.label + " cardGrid"}>
         {cards!.map((card) => (
           <Card
             key={card.id}
             card={card}
             handleChoice={handleChoice}
             clicked={card.selected || card.matched}
+            gridLabel={"card" + level.label}
           />
         ))}
       </div>

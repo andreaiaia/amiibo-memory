@@ -5,6 +5,7 @@ interface Props {
   handleChoice: (card: CardType) => void;
   card: CardType;
   clicked: boolean;
+  gridLabel: string;
 }
 
 export default function Card(props: Props) {
@@ -17,7 +18,11 @@ export default function Card(props: Props) {
   return (
     <div className='card'>
       <div
-        className={props.clicked ? "cardContainer" : "cardContainer cardHidden"}
+        className={
+          props.clicked
+            ? "cardContainer " + props.gridLabel
+            : "cardContainer cardHidden " + props.gridLabel
+        }
       >
         <img
           className={props.clicked ? "front" : "front hidden"}

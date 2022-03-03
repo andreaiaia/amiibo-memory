@@ -1,21 +1,27 @@
-@use "colors";
-@use "cardDimensions";
+@import "cardDimensions";
+@import "colors";
 
 img {
-  width: 150px;
-  height: auto;
   transition: 0.2s ease;
   border-radius: 10px;
 }
 .cardContainer {
   position: relative;
-  width: cardDimensions.$stdWidth;
-  height: cardDimensions.$stdHeight;
+  width: var(--stdWidth);
+  height: var(--stdHeight);
   border-radius: 10px;
-  background-color: colors.$secondary;
+  background-color: var(--color-secondary);
   display: grid;
   justify-items: center;
   place-items: center;
+}
+.cardMedium {
+  width: var(--mediumWidth);
+  height: var(--mediumHeight);
+}
+.cardHard {
+  width: var(--hardWidth);
+  height: var(--hardHeight);
 }
 .cardHidden .front {
   transform: rotateY(90deg);
@@ -29,7 +35,7 @@ img {
   left: 0;
   right: 0;
   margin: auto;
-  width: 150px; /* Need a specific value to work */
+  width: 90%;
 }
 .back {
   margin: 0;
