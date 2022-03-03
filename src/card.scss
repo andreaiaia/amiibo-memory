@@ -1,4 +1,5 @@
 @use "colors";
+@use "cardDimensions";
 
 img {
   width: 150px;
@@ -8,8 +9,8 @@ img {
 }
 .cardContainer {
   position: relative;
-  width: 180px;
-  height: 270px;
+  width: cardDimensions.$stdWidth;
+  height: cardDimensions.$stdHeight;
   border-radius: 10px;
   background-color: colors.$secondary;
   display: grid;

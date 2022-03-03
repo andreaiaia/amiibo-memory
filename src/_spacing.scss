@@ -1,0 +1,28 @@
+// Base variables
+$designbase: 8px;
+
+$spacingXS: $designbase;
+$spacingSM: $designbase * 2;
+$spacingMD: $designbase * 3;
+$spacingLG: $designbase * 5;
+$spacingXL: $designbase * 8;
+$spacingXXL: $designbase * 12;
+
+// Vertical Rythm
+h1 {
+  line-height: $spacingLG;
+  font-size: $spacingLG;
+  margin: $spacingMD 0;
+}
+
+h2 {
+  line-height: $spacingMD;
+  font-size: $spacingMD;
+  margin: $spacingSM 0;
+}
+
+p {
+  line-height: $spacingSM;
+  font-size: $spacingSM;
+  margin: $spacingXS 0;
+}
