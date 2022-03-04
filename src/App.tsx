@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
+import { LevelType } from "./LevelType";
+import HalfWay from "./HalfWay";
 import "./styles.scss";
 
 export interface CardType {
@@ -9,12 +11,6 @@ export interface CardType {
   selected: boolean;
 }
 type AmiiboFetched = Pick<CardType, "image">;
-
-type LevelLabel = "Easy" | "Medium" | "Hard";
-type LevelType = {
-  label: LevelLabel;
-  cardsNumber: 4 | 6 | 8;
-};
 
 export default function App() {
   const levelConf: LevelType[] = [
@@ -28,7 +24,7 @@ export default function App() {
     },
     {
       label: "Hard",
-      cardsNumber: 8,
+      cardsNumber: 9,
     },
   ];
   const [level, setLevel] = useState<LevelType>(levelConf[0]);
@@ -95,106 +91,16 @@ export default function App() {
 
   return (
     <div className='App'>
-      <div className='header'>
-        <div className='hero'>
-          <img
-            className='logo'
-            src={require("./img/credimi_logo.jpg")}
-            alt='Credimi'
-          />
-          <div className='texts'>
-            <h1>Coding Challenge</h1>
-            <h2>An Amiibo Card Game</h2>
-            <p className='turns'>Turni: {turns}</p>
-          </div>
-        </div>
-        <div className='buttons'>
-          <div className='diffChoice'>
-            <button
-              type='button'
-              name='Easy game'
-              className={
-                level.label === levelConf[0].label
-                  ? "selectedBtn easyBtn"
-                  : "easyBtn"
-              }
-              onClick={() => {
-                setLevel(levelConf[0]);
-                shuffle(series, level);
-              }}
-            >
-              Easy
-            </button>
-            <button
-              type='button'
-              className={
-                level.label === levelConf[1].label
-                  ? "selectedBtn mediumBtn"
-                  : "mediumBtn"
-              }
-              name='Medium game'
-              onClick={() => {
-                setLevel(levelConf[1]);
-                shuffle(series, level);
-              }}
-            >
-              Medium
-            </button>
-            <button
-              type='button'
-              className={
-                level.label === levelConf[2].label
-                  ? "selectedBtn hardBtn"
-                  : "hardBtn"
-              }
-              name='Hard game'
-              onClick={() => {
-                setLevel(levelConf[2]);
-                shuffle(series, level);
-              }}
-            >
-              Hard
-            </button>
-          </div>
-          <div className='seriesChoice'>
-            <button
-              type='button'
-              name='Play with Pokemon Cards'
-              className={series === "Pokemon" ? "selectedBtn" : ""}
-              onClick={() => {
-                setSeries("Pokemon");
-                shuffle(series, level);
-              }}
-            >
-              Pokemon
-            </button>
-            <button
-              type='button'
-              name='Play with Animal Crossing Cards'
-              className={series === "animal%20crossing" ? "selectedBtn" : ""}
-              onClick={() => {
-                setSeries("animal%20crossing");
-                shuffle(series, level);
-              }}
-            >
-              Animal Crossing
-            </button>
-            <button
-              type='button'
-              name='Play with Mario Sports Superstars Cards'
-              className={
-                series === "Mario%20Sports%20Superstars" ? "selectedBtn" : ""
-              }
-              onClick={() => {
-                setSeries("Mario%20Sports%20Superstars");
-                shuffle(series, level);
-              }}
-            >
-              Mario Sports Superstars
-            </button>
-          </div>
-        </div>
-      </div>
+      <HalfWay
+        key={1234}
+        turns={turns}
+        level={level}
+        series={series}
+        setLevel={setLevel}
+        setSeries={setSeries}
+        shuffle={shuffle}
+        levelConf={levelConf}
+      />
       <div className={level.label + " cardGrid"}>
         {cards!.map((card) => (
           <Card

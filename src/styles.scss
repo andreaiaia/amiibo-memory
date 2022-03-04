@@ -62,7 +62,7 @@ h2 {
   grid-template-columns: repeat(6, var(--mediumWidth));
 }
 .Hard {
-  grid-template-columns: repeat(4, var(--hardWidth));
+  grid-template-columns: repeat(6, var(--hardWidth));
 }
 img {
   width: var(--stdWidth);
@@ -111,7 +111,7 @@ button {
   flex-direction: column;
 }
 .selectedBtn {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-dirty);
 }
 .easyBtn {
   background-color: var(--color-green);
