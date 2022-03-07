@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import { LevelType } from "./LevelType";
-import HalfWay from "./HalfWay";
-import "./styles.scss";
+import Header from "./Header";
+import "./App.scss";
 
 export interface CardType {
   image: string;
@@ -91,8 +91,8 @@ export default function App() {
 
   return (
     <div className='App'>
-      <HalfWay
-        key={1234}
+      <Header
+        key={Math.floor(Math.random() * 100)}
         turns={turns}
         level={level}
         series={series}

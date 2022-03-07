@@ -1,4 +1,5 @@
 import { LevelType } from "./LevelType";
+import "./Button.scss";
 
 interface Props {
   btnType: string;

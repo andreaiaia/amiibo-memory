@@ -1,5 +1,6 @@
+import { useEffect, useRef } from "react";
 import { CardType } from "./App";
-import "./card.scss";
+import "./Card.scss";
 
 interface Props {
   handleChoice: (card: CardType) => void;
@@ -9,6 +10,27 @@ interface Props {
 }
 
 export default function Card(props: Props) {
+  const animDiv = useRef<HTMLDivElement>(null);
+  // Animation stuff
+  useEffect(() => {
+    if (props.card.matched) {
+      setTimeout(() => {
+        if (animDiv.current) {
+          animDiv.current.style.opacity = "1";
+          animDiv.current.style.zIndex = "2";
+        }
+      }, 100);
+
+      setTimeout(() => {
+        if (animDiv.current) {
+          animDiv.current.style.opacity = "0";
+          animDiv.current.style.zIndex = "-1";
+        }
+      }, 750);
+    }
+  }, [props.card.matched]);
+
+  // Functions
   const handleClick = () => {
     if (!props.clicked) {
       props.handleChoice(props.card);
@@ -24,6 +46,9 @@ export default function Card(props: Props) {
             : "cardContainer cardHidden " + props.gridLabel
         }
       >
+        <div ref={animDiv} className='cardAnimation'>
+          <img src={require("./img/checkmark.svg")} alt='checkmark' />
+        </div>
         <img
           className={props.clicked ? "front" : "front hidden"}
           src={props.card.image}

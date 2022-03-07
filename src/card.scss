@@ -11,6 +11,7 @@ img {
   height: var(--stdHeight);
   border-radius: 10px;
   background-color: var(--color-secondary);
+  display: -ms-grid;
   display: grid;
   justify-items: center;
   place-items: center;
@@ -41,4 +42,21 @@ img {
   margin: 0;
   width: 100%;
   height: 100%;
+}
+
+// Success Animation
+.cardAnimation {
+  opacity: 0;
+  z-index: -1;
+  border-radius: 10px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-green);
+  transition: 0.5s ease-in-out;
+}
+.cardAnimation > img {
+  width: 50px;
+  height: 50px;
+  margin: auto;
 }

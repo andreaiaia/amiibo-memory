@@ -1,5 +1,6 @@
 import { LevelType } from "./LevelType";
 import Button from "./Button";
+import "./Header.scss";
 
 interface Props {
   turns: number;
@@ -11,7 +12,7 @@ interface Props {
   levelConf: LevelType[];
 }
 
-export default function HalfWay(props: Props) {
+export default function Header(props: Props) {
   const diff = ["easy", "medium", "hard"];
   const choice = [
     "pokemon",
@@ -38,6 +39,7 @@ export default function HalfWay(props: Props) {
           {diff!.map((val, index) => {
             return (
               <Button
+                key={Math.floor(Math.random() * 900)}
                 btnType='diffChoice'
                 name={val}
                 series={props.series}
@@ -53,6 +55,7 @@ export default function HalfWay(props: Props) {
           {choice!.map((val) => {
             return (
               <Button
+                key={Math.floor(Math.random() * 900)}
                 btnType='seriesChoice'
                 name={val}
                 series={props.series}

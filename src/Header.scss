@@ -1,0 +1,32 @@
+@use "spacing";
+@import "cardDimensions";
+@import "colors";
+@import "fonts";
+
+// Layout
+.header {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: spacing.$spacingXS;
+  background-color: var(--color-black);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}
+.hero {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+}
+.logo {
+  max-width: 100px;
+  height: auto;
+  justify-self: center;
+  border-radius: 10px;
+}
+.texts {
+  justify-self: start;
+  text-align: left;
+}

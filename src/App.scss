@@ -1,0 +1,50 @@
+@use "spacing";
+@import "cardDimensions";
+@import "colors";
+@import "fonts";
+
+body {
+  background: var(--color-black);
+  margin: 0;
+}
+.App {
+  font-family: var(--secondary_font);
+  text-align: center;
+}
+
+h1 {
+  color: var(--color-primary);
+  font-family: var(--primary_font);
+}
+h2 {
+  color: var(--color-dirty);
+  font-family: var(--secondary_font);
+}
+.turns {
+  color: var(--color-dirty);
+  font-family: var(--secondary_font);
+}
+.cardGrid {
+  margin: spacing.$spacingLG auto spacing.$spacingXL;
+  display: grid;
+  grid-template-columns: repeat(4, var(--stdWidth));
+  grid-gap: spacing.$spacingMD;
+  justify-content: center;
+  justify-items: center;
+  max-width: 1000px;
+}
+.Medium {
+  grid-template-columns: repeat(6, var(--mediumWidth));
+}
+.Hard {
+  grid-template-columns: repeat(6, var(--hardWidth));
+}
+img {
+  width: var(--stdWidth);
+  height: auto;
+  transition: 0.2s ease;
+  border-radius: 10px;
+}
+.hidden {
+  opacity: 0;
+}
