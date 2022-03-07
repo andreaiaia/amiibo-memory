@@ -4,11 +4,16 @@
 @import "fonts";
 
 // Layout
+.header_bg {
+  width: 100vw;
+  background-color: var(--color-banner);
+  margin: 0;
+  padding: 0;
+}
 .header {
   max-width: 1000px;
   margin: 0 auto;
   padding: spacing.$spacingXS;
-  background-color: var(--color-black);
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;

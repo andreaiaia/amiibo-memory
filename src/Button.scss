@@ -5,6 +5,7 @@
 
 // Style
 button {
+  color: var(--color-btn-text);
   font-family: var(--secondary_font);
   font-size: spacing.$spacingSM;
   padding: spacing.$spacingXS spacing.$spacingSM;
@@ -23,7 +24,7 @@ button {
   }
 }
 .selectedBtn {
-  outline: 3px solid var(--color-dirty);
+  outline: 3px solid var(--color-text);
 }
 .easyBtn {
   background-color: var(--color-green);

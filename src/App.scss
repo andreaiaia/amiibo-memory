@@ -3,8 +3,12 @@
 @import "colors";
 @import "fonts";
 
+* {
+  transition: 0.3s ease;
+}
+
 body {
-  background: var(--color-black);
+  background: var(--color-bg);
   margin: 0;
 }
 .App {
@@ -17,11 +21,11 @@ h1 {
   font-family: var(--primary_font);
 }
 h2 {
-  color: var(--color-dirty);
+  color: var(--color-text);
   font-family: var(--secondary_font);
 }
 .turns {
-  color: var(--color-dirty);
+  color: var(--color-text);
   font-family: var(--secondary_font);
 }
 .cardGrid {

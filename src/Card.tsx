@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Check } from "react-feather";
 import { CardType } from "./App";
 import "./Card.scss";
 
@@ -47,7 +48,7 @@ export default function Card(props: Props) {
         }
       >
         <div ref={animDiv} className='cardAnimation'>
-          <img src={require("./img/checkmark.svg")} alt='checkmark' />
+          <Check color='--color-text' size={48} />
         </div>
         <img
           className={props.clicked ? "front" : "front hidden"}

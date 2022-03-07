@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import { LevelType } from "./LevelType";
 import Header from "./Header";
+import Theming from "./Theming";
 import "./App.scss";
 
 export interface CardType {
@@ -112,6 +113,7 @@ export default function App() {
           />
         ))}
       </div>
+      <Theming />
     </div>
   );
 }
