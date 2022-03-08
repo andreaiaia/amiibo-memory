@@ -15,7 +15,7 @@ button {
   transition: 0.2s ease-in;
 
   &:hover {
-    background: var(--color-primary);
+    background: var(--color-btn-hover);
   }
 
   &:active {
