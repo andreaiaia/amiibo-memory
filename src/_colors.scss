@@ -1,46 +1,18 @@
 :root {
   /* Solid colors */
-  --color-bg: rgb(3, 51, 68);
-  --color-text: rgb(246, 248, 249);
-  --color-banner: rgba(3, 51, 68, 0.75);
   --color-primary: rgb(240, 127, 61);
   --color-secondary: rgb(31, 156, 239);
+  --color-text: rgb(246, 248, 249);
+  --color-btn-text: rgb(3, 51, 68);
+  --color-label: rgb(246, 248, 249);
+  --color-bg: rgb(3, 51, 68);
+  --color-banner: rgba(3, 51, 68, 0.75);
+  --color-green: rgb(77, 182, 71);
   --color-yellow: rgb(245, 217, 36);
   --color-red: rgb(235, 92, 92);
-  --color-green: rgb(77, 182, 71);
-  --color-btn-text: rgb(3, 51, 68);
-  --color-lightIcon: rgb(255, 255, 0);
-  --color-darkIcon: rgb(0, 0, 255);
-  --color-groovyIcon: rgb(0, 255, 0);
-  --color-speedyIcon: rgb(255, 255, 255);
-  --color-label: rgb(246, 248, 249);
-
-  // Gradients
-  --gradient-primary: linear-gradient(
-    90deg,
-    rgba(245, 173, 130, 1) 0%,
-    rgba(240, 127, 60, 1) 50%,
-    rgba(175, 93, 44, 1) 100%
-  );
-  --gradient-secondary: linear-gradient(
-    90deg,
-    rgba(3, 50, 67, 1) 0%,
-    rgba(6, 118, 194, 1) 100%
-  );
-  --gradient-neutral: linear-gradient(
-    90deg,
-    rgba(246, 248, 249, 1) 0%,
-    rgba(232, 236, 237, 1) 50%,
-    rgba(209, 217, 220, 1) 100%
-  );
-  --gradient-yellow: linear-gradient(
-    90deg,
-    rgba(3, 50, 67, 1) 0%,
-    rgba(245, 217, 35, 1) 100%
-  );
-  --gradient-orange: linear-gradient(
-    90deg,
-    rgba(3, 50, 67, 1) 0%,
-    rgba(240, 127, 60, 1) 100%
-  );
+  --color-selectedIcon: var(--color-primary);
+  --color-lightIcon: rgb(3, 51, 68);
+  --color-darkIcon: rgb(3, 51, 68);
+  --color-themeOptions: rgb(31, 156, 239);
+  --color-btn-hover: rgb(240, 127, 61);
 }

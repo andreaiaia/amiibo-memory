@@ -1,5 +1,6 @@
 import { LevelType } from "./LevelType";
-import Button from "./Button";
+import DifficultyButton from "./DifficultyButton";
+import SeriesButton from "./SeriesButton";
 import "./Header.scss";
 
 interface Props {
@@ -39,10 +40,9 @@ export default function Header(props: Props) {
           <div className='diffChoice'>
             {diff!.map((val, index) => {
               return (
-                <Button
+                <DifficultyButton
                   key={Math.floor(Math.random() * 900)}
-                  btnType='diffChoice'
-                  name={val}
+                  setting={val}
                   series={props.series}
                   level={props.level}
                   levelConf={props.levelConf[index]}
@@ -55,13 +55,11 @@ export default function Header(props: Props) {
           <div className='seriesChoice'>
             {choice!.map((val) => {
               return (
-                <Button
+                <SeriesButton
                   key={Math.floor(Math.random() * 900)}
-                  btnType='seriesChoice'
-                  name={val}
+                  setting={val}
                   series={props.series}
                   level={props.level}
-                  levelConf={props.level}
                   setSeries={props.setSeries}
                   shuffle={props.shuffle}
                 />
