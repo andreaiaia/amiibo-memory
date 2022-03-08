@@ -4,10 +4,10 @@
 @import "fonts";
 
 .theming {
-  max-width: 350px;
+  max-width: 250px;
   margin: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   justify-content: center;
   justify-items: center;
   padding: 0.4rem 0.8rem;
@@ -26,7 +26,7 @@
 }
 
 .rating {
-  background-color: var(--color-label);
+  background-color: var(--color-themeOptions);
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 16, 0.19),
     0 0.3rem 0.3rem rgba(0, 0, 16, 0.23);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 16, 0.19),
@@ -35,10 +35,11 @@
   border-radius: 2.2rem;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .rating label {
+  margin: 0.2rem 0 0;
   position: relative;
 }
 
@@ -52,30 +53,19 @@ input[type="radio"] {
   transition: all 0.2s;
 }
 
+label,
 input {
   cursor: pointer;
 }
 
 .lightIcon:hover,
-.lightIcon:checked,
+.light:checked,
 .lightIcon:focus {
-  --color-lightIcon: rgb(255, 128, 0);
+  --color-lightIcon: var(--color-selectedIcon);
 }
 
 .darkIcon:hover,
-.darkIcon:checked,
+.dark:checked,
 .darkIcon:focus {
-  --color-darkIcon: rgb(255, 128, 0);
-}
-
-.groovyIcon:hover,
-.groovyIcon:checked,
-.groovyIcon:focus {
-  --color-groovyIcon: rgb(255, 128, 0);
-}
-
-.speedyIcon:hover,
-.speedyIcon:checked,
-.speedyIcon:focus {
-  --color-speedyIcon: rgb(255, 128, 0);
+  --color-darkIcon: var(--color-selectedIcon);
 }
